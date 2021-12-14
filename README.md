@@ -1,7 +1,7 @@
 
 # Astronomy Picture of the Day
 
-This is an Andorid App developed in Jetpack Compose MVVM architecture 
+This is a Native Andorid App developed in Jetpack Compose MVVM architecture, To view the Astronomy Picture of the day from NASA 
 ## API Key
 
 To build this project, you will need to Update the `API_KEY`
