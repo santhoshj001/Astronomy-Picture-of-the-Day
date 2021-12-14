@@ -4,9 +4,11 @@
 This is an Andorid App developed in Jetpack Compose MVVM architecture 
 ## API Key
 
-To run this project, you will need to Update the `API_KEY`
-in `com/teamb/sj/apod/feature_home/data/remote/PictureDetailApi.kt` file
-please get it from https://api.nasa.gov/
+To build this project, you will need to Update the `API_KEY`
+in `local.properties` file,like
+`API_KEY="KEY_VALUE"`
+
+please get the `API KEY` from https://api.nasa.gov/
 
 
 
