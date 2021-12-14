@@ -14,6 +14,10 @@ please get it from https://api.nasa.gov/
 - [Kotlin](https://kotlinlang.org/) -  Official programming language for Android development.
 - [Jetpack Compose](https://developer.android.com/jetpack/compose) - Jetpack Compose is Android’s modern toolkit for building native UI.
 - [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - Collection of libraries that help you design robust, testable, and maintainable apps.
+- [Coil Image Loading](https://coil-kt.github.io/coil/) - An image loading library for Android backed by Kotlin Coroutines
+- [Retrofit](https://square.github.io/retrofit/)- A type-safe HTTP client for Android and Java
+- [Hilt](https://dagger.dev/hilt/) - Hilt provides a standard way to incorporate Dagger dependency injection into an Android application
+- [Room](https://developer.android.com/training/data-storage/room) - Room provides an abstraction layer over SQLite to allow fluent database access while harnessing the full power of SQLite
 <br />
 
 
@@ -34,14 +38,7 @@ please get it from https://api.nasa.gov/
 <img width="200" alt="Screenshot 2021-12-14 at 4 51 56 PM" src="https://user-images.githubusercontent.com/93982208/145989529-5aa8020a-fbc6-42a2-8ada-d20b6f9a99d1.png">   <img width="200" alt="Screenshot 2021-12-14 at 4 51 00 PM" src="https://user-images.githubusercontent.com/93982208/145989005-82e5d65c-9fd6-4895-99e0-a7fc3817efc7.png">   <img width="200" alt="Screenshot 2021-12-14 at 4 52 01 PM" src="https://user-images.githubusercontent.com/93982208/145989140-7db05f6f-75f9-4306-a9e5-a966eb590ebc.png">
 
 
-## Libraries used 
 
-
-Coil Image Loading --   https://coil-kt.github.io/coil/compose/
-
-Retrofit  -- https://square.github.io/retrofit/
-
-Hilt -- https://dagger.dev/hilt/ 
 
 ## Feedback
 
