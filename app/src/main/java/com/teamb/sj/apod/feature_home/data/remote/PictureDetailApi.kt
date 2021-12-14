@@ -9,7 +9,7 @@ interface PictureDetailApi {
     companion object {
         val BASE_URL = "https://api.nasa.gov/"
         const val path = "planetary/apod"
-        const val API_KEY = BuildConfig.API_KEY
+        const val API_KEY = BuildConfig.nasaApiKey
     }
 
     @GET("$path?api_key=$API_KEY&thumbs=true")

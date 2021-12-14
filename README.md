@@ -4,9 +4,11 @@
 This is a Native Andorid App developed in Jetpack Compose MVVM architecture, To view the Astronomy Picture of the day from NASA 
 ## API Key
 
-To build this project, you will need to Update the `API_KEY`
-in `local.properties` file,like
-`API_KEY="KEY_VALUE"`
+To build this project, you will need to Add new file `secrets.properties` and Add the `nasaApiKey`
+like `nasaApiKey="KEY_VALUE"`
+
+by default, the API KEY is Used from `secrets.defaults.properties`, which has a limit of 30  requests per hour
+and 50 requests per day
 
 please get the `API KEY` from https://api.nasa.gov/
 
