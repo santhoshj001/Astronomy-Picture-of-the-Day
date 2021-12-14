@@ -1,7 +1,7 @@
 
 # Astronomy Picture of the Day
 
-This is an Andorid App developed in Jetpack Compose MVVM architrectire 
+This is an Andorid App developed in Jetpack Compose MVVM architecture 
 ## API Key
 
 To run this project, you will need to Update the `API_KEY`
@@ -9,6 +9,12 @@ in `com/teamb/sj/apod/feature_home/data/remote/PictureDetailApi.kt` file
 please get it from https://api.nasa.gov/
 
 
+
+## Technologies Used 🛠
+- [Kotlin](https://kotlinlang.org/) -  Official programming language for Android development.
+- [Jetpack Compose](https://developer.android.com/jetpack/compose) - Jetpack Compose is Android’s modern toolkit for building native UI.
+- [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - Collection of libraries that help you design robust, testable, and maintainable apps.
+<br />
 
 
 ## Features
