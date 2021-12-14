@@ -31,6 +31,6 @@ jobs:
 
       - uses: sparkfabrik/android-build-action@v1.0.0
         with:
-          project-path: AstronomyPicoftheDay
+          project-path: /
           output-path: my-app.apk
           browserstack-upload: false
