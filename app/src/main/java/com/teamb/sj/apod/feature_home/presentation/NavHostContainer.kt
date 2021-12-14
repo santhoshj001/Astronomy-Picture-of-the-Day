@@ -1,0 +1,57 @@
+package com.teamb.sj.apod.feature_home.presentation
+
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.teamb.sj.apod.core.util.Constants
+import com.teamb.sj.apod.core.util.Screen
+import com.teamb.sj.apod.feature_home.presentation.PictureDetail.PictureDetailScreen
+import com.teamb.sj.apod.feature_home.presentation.favpictures.FavPictureScreen
+
+
+@Composable
+fun NavHostContainer(
+    navController: NavHostController,
+    padding: PaddingValues
+) {
+
+    NavHost(
+        navController = navController,
+
+        // set the start destination as home
+        //startDestination = Screen.PictureDetailScreen.createRouteWithDate(null),
+        startDestination = Screen.PictureDetailScreen.route + "?picDate={${Constants.PIC_DATE}}",
+        // Set the padding provided by scaffold
+        modifier = Modifier.padding(paddingValues = padding),
+        builder = {
+            // route : Home
+            composable(
+                Screen.PictureDetailScreen.route + "?picDate={${Constants.PIC_DATE}}",
+                arguments = listOf(
+                    navArgument(
+                        name = Constants.PIC_DATE
+                    ) {
+                        type = NavType.StringType
+                        nullable = true
+                    }
+                )
+            ) {
+                val date = it.arguments?.getString(Constants.PIC_DATE)?.removePrefix("{")
+                    ?.removeSuffix("}")
+                PictureDetailScreen(navController, date)
+            }
+
+            // route : favorites
+            composable(Screen.FavPictureScreen.route) {
+                FavPictureScreen(navController)
+            }
+
+        })
+
+}
