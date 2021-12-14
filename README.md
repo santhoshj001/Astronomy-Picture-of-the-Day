@@ -18,6 +18,9 @@ please get it from https://api.nasa.gov/
 - [Retrofit](https://square.github.io/retrofit/)- A type-safe HTTP client for Android and Java
 - [Hilt](https://dagger.dev/hilt/) - Hilt provides a standard way to incorporate Dagger dependency injection into an Android application
 - [Room](https://developer.android.com/training/data-storage/room) - Room provides an abstraction layer over SQLite to allow fluent database access while harnessing the full power of SQLite
+- [DataStore](https://developer.android.com/topic/libraries/architecture/datastore) - data storage solution that allows you to store key-value pairs or typed objects with protocol buffers
+- [Navigation](https://developer.android.com/guide/navigation) -helps in build and structure in-app UI, handle deep links, and navigate between screens
+
 <br />
 
 
