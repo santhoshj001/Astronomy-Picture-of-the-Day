@@ -1,9 +1,9 @@
 package com.teamb.sj.apod.feature_home.presentation
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -15,12 +15,11 @@ import com.teamb.sj.apod.core.util.Constants
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
 
-    BottomNavigation() {
+    NavigationBar {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
-
         val currentDestination = navBackStackEntry?.destination
         Constants.BottomNavItems.forEach { navItem ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 selected = currentDestination?.hierarchy?.any { it.route == navItem.route } == true,
                 onClick = {
                     navController.navigate(navItem.route) {

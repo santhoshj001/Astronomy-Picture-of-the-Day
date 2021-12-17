@@ -1,16 +1,17 @@
-package com.teamb.sj.apod.feature_home.presentation.PictureDetail
+package com.teamb.sj.apod.feature_home.presentation.picturedetail
 
 import android.app.DatePickerDialog
 import android.util.Log
 import android.widget.DatePicker
-import android.widget.ProgressBar
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -20,11 +21,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.teamb.sj.apod.core.util.Screen
 import com.teamb.sj.apod.core.util.Utils
-import com.teamb.sj.apod.feature_home.presentation.PictureDetail.components.PictureDescription
+import com.teamb.sj.apod.feature_home.presentation.picturedetail.components.PictureAppBar
+import com.teamb.sj.apod.feature_home.presentation.picturedetail.components.PictureDescription
 import kotlinx.coroutines.flow.collectLatest
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+@ExperimentalMaterial3Api
 @Composable
 fun PictureDetailScreen(
     navController: NavController,
@@ -34,8 +37,7 @@ fun PictureDetailScreen(
     val state = viewModel.state.value
     val searchDateState = viewModel.searchDate.value
     val favoriteState = viewModel.favState.value
-    val scaffoldState = rememberScaffoldState()
-
+    //val scaffoldState = rememberScaffoldState()
 
     Log.i("tracking", "PictureDetailScreen: $date")
 
@@ -69,34 +71,37 @@ fun PictureDetailScreen(
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
                 is PictureDetailViewModel.UIEvent.ShowSnackBar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(
-                        message = event.message
-                    )
+                    /*  scaffoldState.snackbarHostState.showSnackbar(
+                          message = event.message
+                      )*/
                 }
             }
         }
     }
+
+    val scrollState = rememberScrollState()
+    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
+
     Scaffold(
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                icon = { Icon(Icons.Filled.DateRange, "") },
-                text = { Text(text = searchDateState) },
                 onClick = { datePickerDialog.show() },
-                elevation = FloatingActionButtonDefaults.elevation(16.dp)
+                icon = { Icon(Icons.Filled.DateRange, "Localized description") },
+                text = { Text(text = Utils.getHumanReadableDate(searchDateState)) },
             )
         },
-        scaffoldState = scaffoldState
+        topBar = {
+            PictureAppBar(
+                scrollBehavior = scrollBehavior,
+                titleString = "Telescope"
+            )
+        }
     ) {
         Column() {
-            TopAppBar(
-                elevation = 8.dp,
-                title = {
-                    Text("Astronomy Pic of the Day.")
-                },
-            )
             if (state.isLoading) {
                 Box(
-                    modifier = Modifier.padding(10.dp).fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(text = "Loading..")
@@ -104,12 +109,11 @@ fun PictureDetailScreen(
                 }
             } else {
                 if (state.pictureDetail.date.isNotEmpty()) {
-                    Card(
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(4.dp)
-                            .clickable { },
-                        elevation = 10.dp,
+                            .padding(8.dp)
+                            .clickable { }
                     ) {
                         Column {
                             PictureDescription(

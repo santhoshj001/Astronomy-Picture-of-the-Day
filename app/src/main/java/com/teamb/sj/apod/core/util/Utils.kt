@@ -3,6 +3,7 @@ package com.teamb.sj.apod.core.util
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
 import java.time.format.DateTimeParseException
 
 object Utils {
@@ -46,6 +47,15 @@ object Utils {
      */
     fun isFutureDate(localDate: LocalDate): Boolean {
         return localDate.isAfter(LocalDate.now(ZoneId.of("PST")))
+    }
+
+    fun getHumanReadableDate(dateStr: String): String {
+        if (isValidDateFormat(dateStr)) {
+
+            val formatter = DateTimeFormatter.ofPattern("d MMM uuuu")
+            return getLocalDateFromString(dateStr).format(formatter)
+        }
+        return dateStr
     }
 
 }

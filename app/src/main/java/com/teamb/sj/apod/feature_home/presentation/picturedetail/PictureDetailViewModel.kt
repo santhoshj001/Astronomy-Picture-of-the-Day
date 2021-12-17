@@ -1,4 +1,4 @@
-package com.teamb.sj.apod.feature_home.presentation.PictureDetail
+package com.teamb.sj.apod.feature_home.presentation.picturedetail
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.teamb.sj.apod.core.util.Constants
 import com.teamb.sj.apod.core.util.Resource
 import com.teamb.sj.apod.core.util.Utils
+import com.teamb.sj.apod.feature_home.data.local.prefstore.DataStoreManager
 import com.teamb.sj.apod.feature_home.domain.model.PictureDetail
 import com.teamb.sj.apod.feature_home.domain.usecase.GetPictureDetailUseCase
-import com.teamb.sj.apod.feature_home.data.local.prefstore.DataStoreManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -24,7 +24,7 @@ class PictureDetailViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
-    private var _searchDateState = mutableStateOf("Choose Date")
+    private var _searchDateState = mutableStateOf(Constants.DEFAULT_PIC_DATE)
     val searchDate: State<String> = _searchDateState
 
     private val _state = mutableStateOf(PictureInfoState())
@@ -41,7 +41,7 @@ class PictureDetailViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             dataStoreManager.getRecentlyUsedDate.collect { date ->
-                if (date != Constants.DEFAULT && _searchDateState.value != date) {
+                if (date!= null && date != Constants.DEFAULT && _searchDateState.value != date) {
                     _searchDateState.value = date
                     search()
                 }
@@ -51,12 +51,10 @@ class PictureDetailViewModel @Inject constructor(
 
 
     private fun search() {
-
         //update the recently used date to data store
         viewModelScope.launch {
             dataStoreManager.setRecentlyUsedDate(_searchDateState.value)
         }
-
         getPictureDetailJob?.cancel()
         getPictureDetailJob = getPictureDetailUseCase(_searchDateState.value).onEach { result ->
             when (result) {
@@ -114,7 +112,8 @@ class PictureDetailViewModel @Inject constructor(
             } else if (Utils.isOlderDate(localDate)) {
                 viewModelScope.launch { _eventFlow.emit(UIEvent.ShowSnackBar("Invalid date - Date Older than 1995-06-16")) }
             } else {
-                _searchDateState.value = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                val updatedDate = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                updatedDate?.let { _searchDateState.value = it }
                 search()
             }
         }

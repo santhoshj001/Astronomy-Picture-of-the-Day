@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Home
 import com.teamb.sj.apod.feature_home.presentation.BottomNavItem
 
 object Constants {
+    const val DEFAULT_PIC_DATE: String = "Choose Date"
     const val IMAGE: String = "image"
     const val DEFAULT: String = "default"
     const val PIC_DATE = "picDate"

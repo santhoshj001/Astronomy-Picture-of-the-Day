@@ -2,6 +2,7 @@ package com.teamb.sj.apod.feature_home.presentation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -11,10 +12,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.teamb.sj.apod.core.util.Constants
 import com.teamb.sj.apod.core.util.Screen
-import com.teamb.sj.apod.feature_home.presentation.PictureDetail.PictureDetailScreen
+import com.teamb.sj.apod.feature_home.presentation.picturedetail.PictureDetailScreen
 import com.teamb.sj.apod.feature_home.presentation.favpictures.FavPictureScreen
 
 
+@ExperimentalMaterial3Api
 @Composable
 fun NavHostContainer(
     navController: NavHostController,

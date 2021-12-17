@@ -1,9 +1,10 @@
-package com.teamb.sj.apod.feature_home.presentation.PictureDetail.components
+package com.teamb.sj.apod.feature_home.presentation.picturedetail.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -19,32 +20,26 @@ fun PictureDetailBody(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(
-                    start = 16.dp,
-                    top = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp
-                )
+                .padding(8.dp)
         ) {
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Text(
                     text = picture.title,
-                    style = MaterialTheme.typography.h5,
+                    style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Start,
                     modifier = Modifier
-                        .padding(
-                            bottom = 16.dp
-                        )
                         .weight(5f)
                 )
                 Box(modifier = Modifier.weight(1f)) {
-                    FavoriteButton(isBookmarked = isFav,
+                    FavoriteButton(checked = isFav,
                         onClick = { onClick(!isFav) })
                 }
             }
             Text(
                 text = picture.explanation,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Justify,
                 modifier = Modifier
                     .fillMaxWidth()

@@ -1,4 +1,4 @@
-package com.teamb.sj.apod.feature_home.presentation.PictureDetail
+package com.teamb.sj.apod.feature_home.presentation.picturedetail
 
 import com.teamb.sj.apod.feature_home.domain.model.PictureDetail
 
