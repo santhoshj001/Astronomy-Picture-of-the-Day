@@ -40,9 +40,9 @@ please get the `API KEY` from https://api.nasa.gov/
 
 ## Screenshots
 
+<img src="https://user-images.githubusercontent.com/93982208/146616608-150d5d68-168a-4731-afb3-bc1969b50011.png" width=200/>      <img src="https://user-images.githubusercontent.com/93982208/146616611-9589d584-b481-4ed5-97da-1726b7ba0262.png" width=200/>    <img src="https://user-images.githubusercontent.com/93982208/146616614-925f260a-0eb3-4498-852c-c6872bd87dd9.png" width=200/>    <img src="https://user-images.githubusercontent.com/93982208/146616599-9f87f56f-1a65-4600-b41d-de2485f8f78d.png" width=200/>
 
 
-<img width="200" alt="Screenshot 2021-12-14 at 4 51 56 PM" src="https://user-images.githubusercontent.com/93982208/145989529-5aa8020a-fbc6-42a2-8ada-d20b6f9a99d1.png">   <img width="200" alt="Screenshot 2021-12-14 at 4 51 00 PM" src="https://user-images.githubusercontent.com/93982208/145989005-82e5d65c-9fd6-4895-99e0-a7fc3817efc7.png">   <img width="200" alt="Screenshot 2021-12-14 at 4 52 01 PM" src="https://user-images.githubusercontent.com/93982208/145989140-7db05f6f-75f9-4306-a9e5-a966eb590ebc.png">
 
 
 
