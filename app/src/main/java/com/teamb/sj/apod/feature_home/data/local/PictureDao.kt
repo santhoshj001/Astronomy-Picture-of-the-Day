@@ -18,7 +18,7 @@ interface PictureDao {
     suspend fun delete(date: String)
 
     @Query("SELECT * FROM picturedetailentity WHERE date is :date")
-    suspend fun getPicture(date: String): PictureDetailEntity
+    suspend fun getPicture(date: String): PictureDetailEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavorite(favoritesEntity: FavoritesEntity)

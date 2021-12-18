@@ -18,36 +18,32 @@ class PictureDetailRepositoryImpl @Inject constructor(
 ) : PictureDetailRepository {
 
     override fun getPicture(date: String): Flow<Resource<PictureDetail>> = flow {
-        emit(Resource.Loading())
-        val pic = dao.getPicture(date)?.toPictureDetail()
-        emit(Resource.Loading(pic))
+        val nullPicture: PictureDetail? = null
 
-        try {
-            val newPic = api.getPicture(date)
-            dao.delete(newPic.date)
-            dao.insertPicture(newPic.toPictureDetailEntity())
-        } catch (e: HttpException) {
-            emit(
-                Resource.Error(
-                    message = "oops!!! something went wrong",
-                    data = pic
+        emit(Resource.Loading(nullPicture))
+        val databasePicture = dao.getPicture(date)
+
+        if (databasePicture != null) {
+            emit(Resource.Success(databasePicture.toPictureDetail()))
+        } else {
+            try {
+                val networkPicture = api.getPicture(date)
+                dao.insertPicture(networkPicture.toPictureDetailEntity())
+            } catch (e: HttpException) {
+                emit(
+                    Resource.Error(message = "oops!!! something went wrong", nullPicture)
                 )
-            )
-        } catch (e: IOException) {
-            emit(
-                Resource.Error(
-                    message = "couldn't reach server please check your network connection",
-                    data = pic
+            } catch (e: IOException) {
+                emit(
+                    Resource.Error(
+                        message = "couldn't reach server please check your network connection",
+                        nullPicture
+                    )
                 )
-            )
+            }
+            val updatedPic = dao.getPicture(date = date)?.toPictureDetail()
+            emit(Resource.Success(data = updatedPic))
         }
-
-        val updatedPic = dao.getPicture(date = date)?.toPictureDetail()
-        emit(
-            Resource.Success(
-                data = updatedPic
-            )
-        )
     }
 
     override suspend fun addFavorite(date: String) {
