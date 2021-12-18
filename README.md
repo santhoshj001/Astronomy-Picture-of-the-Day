@@ -52,4 +52,7 @@ please get the `API KEY` from https://api.nasa.gov/
 If you have any feedback, please reach out to me at santhoshj296@gmail.com
 
 
+## Credits
+
+<a href="https://iconscout.com/icons/telescope" target="_blank">Telescope Icon</a> by <a href="https://iconscout.com/contributors/chamedesign">Chamestudio</a> on <a href="https://iconscout.com">Iconscout</a>
 
