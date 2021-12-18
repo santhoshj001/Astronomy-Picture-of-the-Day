@@ -5,11 +5,11 @@ import android.content.Context
 import androidx.room.Room
 import com.teamb.sj.apod.feature_home.data.PictureDetailRepositoryImpl
 import com.teamb.sj.apod.feature_home.data.local.PictureDatabase
+import com.teamb.sj.apod.feature_home.data.local.prefstore.DataStoreManager
 import com.teamb.sj.apod.feature_home.data.remote.PictureDetailApi
 import com.teamb.sj.apod.feature_home.domain.repository.PictureDetailRepository
 import com.teamb.sj.apod.feature_home.domain.usecase.GetFavoritePictureUseCase
 import com.teamb.sj.apod.feature_home.domain.usecase.GetPictureDetailUseCase
-import com.teamb.sj.apod.feature_home.data.local.prefstore.DataStoreManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,8 +26,11 @@ object PictureDetailModule {
 
     @Provides
     @Singleton
-    fun provideGetPictureDetailUseCase(repository: PictureDetailRepository): GetPictureDetailUseCase {
-        return GetPictureDetailUseCase(repository)
+    fun provideGetPictureDetailUseCase(
+        repository: PictureDetailRepository,
+        dataStoreManager: DataStoreManager
+    ): GetPictureDetailUseCase {
+        return GetPictureDetailUseCase(repository, dataStoreManager)
     }
 
     @Provides

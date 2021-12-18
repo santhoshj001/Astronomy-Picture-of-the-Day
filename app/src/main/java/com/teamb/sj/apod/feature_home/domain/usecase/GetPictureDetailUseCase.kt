@@ -2,12 +2,15 @@ package com.teamb.sj.apod.feature_home.domain.usecase
 
 import com.teamb.sj.apod.core.util.Resource
 import com.teamb.sj.apod.core.util.Utils
+import com.teamb.sj.apod.feature_home.data.local.prefstore.DataStoreManager
 import com.teamb.sj.apod.feature_home.domain.model.PictureDetail
 import com.teamb.sj.apod.feature_home.domain.repository.PictureDetailRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetPictureDetailUseCase(
+class GetPictureDetailUseCase @Inject constructor (
     private val repository: PictureDetailRepository,
+    private val dataStoreManager: DataStoreManager
 ) {
     operator fun invoke(date: String): Flow<Resource<PictureDetail>> {
         if (date.isBlank() || !Utils.isValidDateFormat(date)) {
@@ -26,5 +29,13 @@ class GetPictureDetailUseCase(
 
     fun isFavorite(date: String): Flow<Resource<Boolean>> {
         return repository.isFavorite(date)
+    }
+
+    fun getRecentUsedDate(): Flow<String> {
+        return dataStoreManager.getRecentlyUsedDate
+    }
+
+    suspend fun setRecentUsedDate(date: String) {
+        dataStoreManager.setRecentlyUsedDate(date)
     }
 }
