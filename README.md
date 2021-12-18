@@ -1,5 +1,5 @@
 
-# Astronomy Picture of the Day
+#  Telescope - Astronomy Picture of the Day
 
 This is a Native Andorid App developed in Jetpack Compose MVVM architecture, To view the Astronomy Picture of the day from NASA 
 ## API Key
