@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">APOD</string>
+    <string name="app_name">TeleScope</string>
     <string name="unfavorite">unFavorite</string>
     <string name="favorite">Favorite</string>
 </resources>
