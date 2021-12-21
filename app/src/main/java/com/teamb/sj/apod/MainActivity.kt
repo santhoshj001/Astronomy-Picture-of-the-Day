@@ -3,6 +3,7 @@ package com.teamb.sj.apod
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -13,6 +14,7 @@ import com.teamb.sj.apod.feature_home.presentation.BottomNavigationBar
 import com.teamb.sj.apod.feature_home.presentation.NavHostContainer
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @ExperimentalMaterial3Api
@@ -34,4 +36,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-

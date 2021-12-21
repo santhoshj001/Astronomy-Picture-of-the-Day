@@ -4,18 +4,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.teamb.sj.apod.R
+import java.util.Locale
 
 @Composable
 fun PictureAppBar(
@@ -35,11 +38,10 @@ fun PictureAppBar(
     )
     Box(modifier = Modifier.background(backgroundColor)) {
         CenterAlignedTopAppBar(
-            modifier = modifier,
             actions = actions,
             title = {
                 Text(
-                    text = titleString.toUpperCase(),
+                    text = titleString.uppercase(Locale.getDefault()),
                     style = MaterialTheme.typography.displayLarge
                 )
             },
@@ -66,7 +68,6 @@ fun AppBarPreview() {
         PictureAppBar(titleString = "Preview")
     }
 }
-
 
 @Preview
 @Composable

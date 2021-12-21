@@ -11,7 +11,8 @@ data class PictureDetailDto(
     val service_version: String,
     val title: String,
     val url: String,
-    val thumbnail_url: String
+    val thumbnail_url: String,
+    val copyright: String?
 ) {
     fun toPictureDetailEntity(): PictureDetailEntity {
         return PictureDetailEntity(
@@ -19,7 +20,8 @@ data class PictureDetailDto(
             explanation = explanation,
             mediaType = media_type,
             title = title,
-            url = if (media_type == Constants.IMAGE) url else thumbnail_url
+            url = if (media_type == Constants.IMAGE) url else thumbnail_url,
+            copyright = copyright ?: "Copyright Free"
         )
     }
 }

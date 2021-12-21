@@ -8,10 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Scaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallTopAppBar
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -30,34 +28,29 @@ fun FavPictureScreen(
 ) {
     val state = viewModel.state.value
 
-    viewModel.getFavoritePictures()
-
     Scaffold(
         topBar = {
-            PictureAppBar(
-                titleString = "Telescope"
-            )
-        }
-    ) {
-
-        LazyVerticalGrid(
-            cells = GridCells.Fixed(2),
-            contentPadding = PaddingValues(8.dp)
-        ) {
-            items(state.favoritePictures) { picture ->
-                FavoritePictureItem(
-                    pictureDetail = picture,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(4.dp)
-                        .clickable {
-                            navController.navigate(
-                                Screen.PictureDetailScreen.createRouteWithDate(picture.date)
-                            )
-                        }
-                )
+            PictureAppBar(titleString = "Telescope")
+        },
+        content = {
+            LazyVerticalGrid(
+                cells = GridCells.Fixed(2),
+                contentPadding = PaddingValues(8.dp)
+            ) {
+                items(state.favoritePictures) { picture ->
+                    FavoritePictureItem(
+                        pictureDetail = picture,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                            .clickable {
+                                navController.navigate(
+                                    Screen.PictureDetailScreen.createRouteWithDate(picture.date)
+                                )
+                            }
+                    )
+                }
             }
         }
-
-    }
+    )
 }

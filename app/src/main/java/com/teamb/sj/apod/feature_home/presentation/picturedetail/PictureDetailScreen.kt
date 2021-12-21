@@ -1,17 +1,23 @@
 package com.teamb.sj.apod.feature_home.presentation.picturedetail
 
 import android.app.DatePickerDialog
-import android.util.Log
 import android.widget.DatePicker
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material3.*
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,10 +28,10 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.teamb.sj.apod.core.util.Screen
 import com.teamb.sj.apod.core.util.Utils
 import com.teamb.sj.apod.feature_home.presentation.picturedetail.components.PictureAppBar
-import com.teamb.sj.apod.feature_home.presentation.picturedetail.components.PictureDescription
-import kotlinx.coroutines.flow.collectLatest
+import com.teamb.sj.apod.feature_home.presentation.picturedetail.components.PictureDetailHeader
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.flow.collectLatest
 
 @ExperimentalMaterial3Api
 @Composable
@@ -37,9 +43,7 @@ fun PictureDetailScreen(
     val state = viewModel.state.value
     val searchDateState = viewModel.searchDate.value
     val favoriteState = viewModel.favState.value
-    //val scaffoldState = rememberScaffoldState()
-
-    Log.i("tracking", "PictureDetailScreen: $date")
+    val scaffoldState = rememberScaffoldState()
 
     date?.let { dateString ->
         if (!searchDateState.contentEquals(dateString)) {
@@ -65,24 +69,22 @@ fun PictureDetailScreen(
             }
         }, selectedDate.year, selectedDate.monthValue - 1, selectedDate.dayOfMonth
     )
-
+    datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
                 is PictureDetailViewModel.UIEvent.ShowSnackBar -> {
-                    /*  scaffoldState.snackbarHostState.showSnackbar(
-                          message = event.message
-                      )*/
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = event.message
+                    )
                 }
             }
         }
     }
 
-    val scrollState = rememberScrollState()
-    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
-
     Scaffold(
+        scaffoldState = scaffoldState,
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = { datePickerDialog.show() },
@@ -91,36 +93,29 @@ fun PictureDetailScreen(
             )
         },
         topBar = {
-            PictureAppBar(
-                scrollBehavior = scrollBehavior,
-                titleString = "Telescope"
-            )
-        }
+            PictureAppBar(titleString = "Telescope")
+        },
     ) {
-        Column() {
+        Column {
             if (state.isLoading) {
                 Box(
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(text = "Loading..")
-
                 }
             } else {
                 if (state.pictureDetail.date.isNotEmpty()) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                            .clickable { }
-                    ) {
-                        Column {
-                            PictureDescription(
+                    LazyColumn {
+                        item {
+                            PictureDetailHeader(
                                 picture = state.pictureDetail,
-                                favoriteState,
-                                viewModel::toggleFavorite
+                                favoriteState = favoriteState,
+                                toggleFav = viewModel::toggleFavorite
                             )
+                        }
+                        item {
+                            Spacer(modifier = Modifier.height(150.dp))
                         }
                     }
                 }
