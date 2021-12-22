@@ -5,10 +5,10 @@ import com.teamb.sj.apod.core.util.Utils
 import com.teamb.sj.apod.feature_home.data.local.prefstore.DataStoreManager
 import com.teamb.sj.apod.feature_home.domain.model.PictureDetail
 import com.teamb.sj.apod.feature_home.domain.repository.PictureDetailRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
-class GetPictureDetailUseCase @Inject constructor (
+class GetPictureDetailUseCase @Inject constructor(
     private val repository: PictureDetailRepository,
     private val dataStoreManager: DataStoreManager
 ) {

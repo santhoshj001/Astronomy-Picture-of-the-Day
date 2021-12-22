@@ -15,6 +15,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,7 +39,7 @@ import kotlinx.coroutines.flow.collectLatest
 fun PictureDetailScreen(
     navController: NavController,
     date: String?,
-    viewModel: PictureDetailViewModel = hiltViewModel()
+    viewModel: PictureDetailViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
     val searchDateState = viewModel.searchDate.value
@@ -94,7 +95,7 @@ fun PictureDetailScreen(
         },
         topBar = {
             PictureAppBar(titleString = "Telescope")
-        },
+        }, backgroundColor = MaterialTheme.colorScheme.background
     ) {
         Column {
             if (state.isLoading) {

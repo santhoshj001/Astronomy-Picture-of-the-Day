@@ -1,16 +1,17 @@
 package com.teamb.sj.apod.feature_home.data
 
+import com.teamb.sj.apod.core.util.FirebaseUtils
 import com.teamb.sj.apod.core.util.Resource
 import com.teamb.sj.apod.feature_home.data.local.PictureDao
 import com.teamb.sj.apod.feature_home.data.local.entity.FavoritesEntity
 import com.teamb.sj.apod.feature_home.data.remote.PictureDetailApi
 import com.teamb.sj.apod.feature_home.domain.model.PictureDetail
 import com.teamb.sj.apod.feature_home.domain.repository.PictureDetailRepository
+import java.io.IOException
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
-import java.io.IOException
-import javax.inject.Inject
 
 class PictureDetailRepositoryImpl @Inject constructor(
     private val api: PictureDetailApi,
@@ -27,7 +28,7 @@ class PictureDetailRepositoryImpl @Inject constructor(
             emit(Resource.Success(databasePicture.toPictureDetail()))
         } else {
             try {
-                val networkPicture = api.getPicture(date)
+                val networkPicture = api.getPicture(date, FirebaseUtils.getApiKey())
                 dao.insertPicture(networkPicture.toPictureDetailEntity())
             } catch (e: HttpException) {
                 emit(
@@ -53,7 +54,6 @@ class PictureDetailRepositoryImpl @Inject constructor(
     override suspend fun deleteFavorite(date: String) {
         dao.deleteFavorite(date)
     }
-
 
     override fun isFavorite(date: String): Flow<Resource<Boolean>> = flow {
         val a = dao.isFavorite(date)

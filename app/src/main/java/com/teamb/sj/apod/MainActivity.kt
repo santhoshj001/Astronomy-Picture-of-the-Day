@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.AppTheme
+import com.teamb.sj.apod.core.util.FirebaseUtils
 import com.teamb.sj.apod.feature_home.presentation.BottomNavigationBar
 import com.teamb.sj.apod.feature_home.presentation.NavHostContainer
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
     @ExperimentalMaterial3Api
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseUtils.initFirebase()
         setContent {
             AppTheme {
                 // A surface container using the 'background' color from the theme
