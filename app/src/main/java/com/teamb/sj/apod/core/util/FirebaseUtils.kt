@@ -10,7 +10,7 @@ object FirebaseUtils {
     fun initFirebase() {
         val remoteConfig = Firebase.remoteConfig
         val configSettings = remoteConfigSettings {
-            minimumFetchIntervalInSeconds = 3600
+            minimumFetchIntervalInSeconds = 60
         }
         remoteConfig.setConfigSettingsAsync(configSettings)
         remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
@@ -25,5 +25,9 @@ object FirebaseUtils {
 
     fun getApiKey(): String {
         return Firebase.remoteConfig.getString(Constants.API_KEY)
+    }
+
+    fun isSetWallpaperEnabled(): Boolean {
+        return Firebase.remoteConfig.getBoolean(Constants.WALLPAPER)
     }
 }

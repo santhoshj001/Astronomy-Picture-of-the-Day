@@ -38,6 +38,7 @@ class FavoritesPictureViewModel @Inject constructor(
                         )
                     } ?: FavoritePictureState()
                 }
+                else -> {}
             }
         }.launchIn(viewModelScope)
     }

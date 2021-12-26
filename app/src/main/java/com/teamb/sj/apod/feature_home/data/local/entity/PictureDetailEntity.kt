@@ -13,7 +13,8 @@ data class PictureDetailEntity(
     val mediaType: String,
     val title: String,
     val url: String,
-    val copyright: String
+    val hdUrl: String,
+    val copyright: String,
 ) {
     fun toPictureDetail(): PictureDetail {
         return PictureDetail(
@@ -22,6 +23,7 @@ data class PictureDetailEntity(
             mediaType = mediaType,
             title = title,
             url = url,
+            hdUrl = hdUrl,
             copyright = copyright
         )
     }

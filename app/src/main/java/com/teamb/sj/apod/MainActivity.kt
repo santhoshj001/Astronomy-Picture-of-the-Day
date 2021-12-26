@@ -16,9 +16,9 @@ import com.teamb.sj.apod.feature_home.presentation.NavHostContainer
 import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalMaterialApi
+@ExperimentalMaterial3Api
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @ExperimentalMaterial3Api
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseUtils.initFirebase()

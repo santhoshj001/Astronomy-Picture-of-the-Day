@@ -10,12 +10,16 @@ import com.teamb.sj.apod.core.util.Utils
 import com.teamb.sj.apod.feature_home.domain.model.PictureDetail
 import com.teamb.sj.apod.feature_home.domain.usecase.GetPictureDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class PictureDetailViewModel @Inject constructor(
@@ -48,7 +52,7 @@ class PictureDetailViewModel @Inject constructor(
     }
 
     private fun search() {
-        //update the recently used date to data store
+        // update the recently used date to data store
         viewModelScope.launch {
             getPictureDetailUseCase.setRecentUsedDate(_searchDateState.value)
         }
@@ -106,10 +110,18 @@ class PictureDetailViewModel @Inject constructor(
         localDate?.let {
             when {
                 Utils.isFutureDate(localDate) -> {
-                    viewModelScope.launch { _eventFlow.emit(UIEvent.ShowSnackBar("Invalid date - future Date")) }
+                    viewModelScope.launch {
+                        _eventFlow.emit(
+                            UIEvent.ShowSnackBar("Invalid date - future Date")
+                        )
+                    }
                 }
                 Utils.isOlderDate(localDate) -> {
-                    viewModelScope.launch { _eventFlow.emit(UIEvent.ShowSnackBar("Invalid date - Date Older than 1995-06-16")) }
+                    viewModelScope.launch {
+                        _eventFlow.emit(
+                            UIEvent.ShowSnackBar("Invalid date - Date Older than 1995-06-16")
+                        )
+                    }
                 }
                 else -> {
                     val updatedDate = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))

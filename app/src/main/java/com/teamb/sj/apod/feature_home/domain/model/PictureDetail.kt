@@ -6,5 +6,6 @@ data class PictureDetail(
     val mediaType: String = "",
     val title: String = "",
     val url: String = "",
-    val copyright: String = ""
+    val hdUrl: String = "",
+    val copyright: String = "",
 )

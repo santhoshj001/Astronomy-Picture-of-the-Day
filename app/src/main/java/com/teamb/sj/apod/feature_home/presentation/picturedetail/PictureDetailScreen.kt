@@ -93,9 +93,8 @@ fun PictureDetailScreen(
                 text = { Text(text = Utils.getHumanReadableDate(searchDateState)) },
             )
         },
-        topBar = {
-            PictureAppBar(titleString = "Telescope")
-        }, backgroundColor = MaterialTheme.colorScheme.background
+        topBar = { PictureAppBar(titleString = "Telescope") },
+        backgroundColor = MaterialTheme.colorScheme.background
     ) {
         Column {
             if (state.isLoading) {
