@@ -18,6 +18,8 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Wallpaper
+import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -109,11 +111,11 @@ fun PictureDetailBody(
                 )
             })
             val visibility = FirebaseUtils.isSetWallpaperEnabled()
-            if (visibility) {
+            if (visibility && picture.mediaType == "image") {
                 Spacer(modifier = Modifier.width(8.dp))
                 OutlinedButton(onClick = { fileID = downloadImage(picture.hdUrl, context) }) {
                     Icon(
-                        Icons.Default.Download,
+                        Icons.Outlined.Download,
                         contentDescription = "Download",
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(ButtonDefaults.IconSize)

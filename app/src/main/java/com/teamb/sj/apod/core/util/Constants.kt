@@ -3,6 +3,7 @@ package com.teamb.sj.apod.core.util
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.Home
 import com.teamb.sj.apod.feature_home.presentation.BottomNavItem
 
 object Constants {
@@ -17,7 +18,7 @@ object Constants {
     val BottomNavItems = listOf(
         BottomNavItem(
             label = "Home",
-            icon = Icons.Filled.Home,
+            icon = Icons.Outlined.Home,
             route = "picture_screen" + "?picDate={picDate}"
         ),
         BottomNavItem(
