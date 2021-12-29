@@ -8,7 +8,7 @@ import com.teamb.sj.apod.feature_home.data.local.entity.PictureDetailEntity
 data class PictureDetailDto(
     val date: String,
     val explanation: String,
-    val hdurl: String,
+    val hdurl: String?,
     val media_type: String,
     val service_version: String,
     val title: String,
@@ -23,7 +23,7 @@ data class PictureDetailDto(
             mediaType = media_type,
             title = title,
             url = if (media_type == Constants.IMAGE) url else thumbnail_url,
-            hdUrl = hdurl,
+            hdUrl = hdurl.orEmpty(),
             copyright = copyright ?: "Copyright Free"
         )
     }
