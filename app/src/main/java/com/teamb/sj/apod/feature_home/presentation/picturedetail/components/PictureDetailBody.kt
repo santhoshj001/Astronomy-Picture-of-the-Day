@@ -14,12 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Wallpaper
 import androidx.compose.material.icons.outlined.Download
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
