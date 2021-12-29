@@ -14,9 +14,8 @@ android {
         applicationId "com.teamb.sj.apod"
         minSdk 28
         targetSdk 31
-        versionCode 5
-        versionName "1.004"
-
+        versionCode 6
+        versionName "1.005"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -34,6 +33,7 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.debug
             debuggable true
+            versionNameSuffix '-debug'
         }
     }
     compileOptions {
@@ -74,6 +74,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-config-ktx:21.0.1'
     implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.6'
     implementation 'com.google.firebase:firebase-analytics-ktx:20.0.2'
+    implementation 'com.airbnb.android:lottie-compose:4.2.2'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

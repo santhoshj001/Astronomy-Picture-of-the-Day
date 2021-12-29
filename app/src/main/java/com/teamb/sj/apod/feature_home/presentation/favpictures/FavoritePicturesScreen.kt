@@ -28,7 +28,7 @@ fun FavPictureScreen(
     viewModel: FavoritesPictureViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-
+    viewModel.getFavoritePictures()
     Scaffold(
         backgroundColor = MaterialTheme.colorScheme.background,
         topBar = {

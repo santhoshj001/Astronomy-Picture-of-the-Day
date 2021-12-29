@@ -2,10 +2,12 @@ package com.example.compose
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import com.example.ui.theme.AppTypography
 
 private val LightThemeColors = lightColorScheme(
@@ -71,13 +73,15 @@ fun AppTheme(
     content: @Composable() () -> Unit
 ) {
     val colors = if (!useDarkTheme) {
-        LightThemeColors
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S)
+            dynamicLightColorScheme(LocalContext.current)
+        else
+            LightThemeColors
     } else {
-        DarkThemeColors
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S)
+            dynamicDarkColorScheme(LocalContext.current)
+        else
+            DarkThemeColors
     }
-	MaterialTheme(
-        colorScheme = colors,
-        typography = AppTypography,
-        content = content
-    )
+    MaterialTheme(colorScheme = colors, typography = AppTypography, content = content)
 }
