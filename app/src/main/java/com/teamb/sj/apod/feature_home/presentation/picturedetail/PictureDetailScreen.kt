@@ -2,21 +2,14 @@ package com.teamb.sj.apod.feature_home.presentation.picturedetail
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -86,14 +79,16 @@ fun PictureDetailScreen(
 
     Scaffold(
         scaffoldState = scaffoldState,
-        floatingActionButton = {
-            ExtendedFloatingActionButton(
-                onClick = { datePickerDialog.show() },
-                icon = { Icon(Icons.Filled.DateRange, "Localized description") },
-                text = { Text(text = Utils.getHumanReadableDate(searchDateState)) },
+        topBar = {
+            PictureAppBar(
+                titleString = "Telescope",
+                actions = {
+                    IconButton(onClick = { datePickerDialog.show() }) {
+                        Icon(imageVector = Icons.Default.DateRange, contentDescription = "")
+                    }
+                }
             )
         },
-        topBar = { PictureAppBar(titleString = "Telescope") },
         backgroundColor = MaterialTheme.colorScheme.background
     ) {
         Column {
