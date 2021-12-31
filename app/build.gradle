@@ -14,8 +14,8 @@ android {
         applicationId "com.teamb.sj.apod"
         minSdk 28
         targetSdk 31
-        versionCode 6
-        versionName "1.005"
+        versionCode 7
+        versionName "1.006"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true

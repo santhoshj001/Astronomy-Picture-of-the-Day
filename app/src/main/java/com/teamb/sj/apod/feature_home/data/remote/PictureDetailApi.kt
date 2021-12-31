@@ -12,7 +12,8 @@ interface PictureDetailApi {
 
     @GET("$path?thumbs=true")
     suspend fun getPicture(
-        @Query("date") date: String,
+        @Query("start_date") startDate: String,
+        @Query("end_date") endDate: String,
         @Query("api_key") apiKey: String,
-    ): PictureDetailDto
+    ): List<PictureDetailDto>
 }

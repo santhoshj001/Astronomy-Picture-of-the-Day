@@ -33,7 +33,7 @@ fun ExpandableText(
 
         when {
             isExpanded -> {
-                finalText = "$text Show Less"
+                finalText = "$text...Show Less"
             }
             !isExpanded && textLayoutResult.hasVisualOverflow -> {
                 val lastCharIndex = textLayoutResult.getLineEnd(MINIMIZED_MAX_LINES - 1)

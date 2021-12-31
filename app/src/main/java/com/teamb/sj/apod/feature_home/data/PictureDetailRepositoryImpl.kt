@@ -2,6 +2,7 @@ package com.teamb.sj.apod.feature_home.data
 
 import com.teamb.sj.apod.core.util.FirebaseUtils
 import com.teamb.sj.apod.core.util.Resource
+import com.teamb.sj.apod.core.util.Utils
 import com.teamb.sj.apod.feature_home.data.local.PictureDao
 import com.teamb.sj.apod.feature_home.data.local.entity.FavoritesEntity
 import com.teamb.sj.apod.feature_home.data.remote.PictureDetailApi
@@ -28,8 +29,16 @@ class PictureDetailRepositoryImpl @Inject constructor(
             emit(Resource.Success(databasePicture.toPictureDetail()))
         } else {
             try {
-                val networkPicture = api.getPicture(date, FirebaseUtils.getApiKey())
-                dao.insertPicture(networkPicture.toPictureDetailEntity())
+
+                val startDate = Utils.getStartDateOfMonth(date)
+                val endDate = Utils.getEndDateOfMonth(date)
+                val networkPictures = api.getPicture(
+                    startDate = startDate,
+                    endDate = endDate,
+                    apiKey = FirebaseUtils.getApiKey()
+                )
+                for (picture in networkPictures)
+                    dao.insertPicture(picture.toPictureDetailEntity())
             } catch (e: HttpException) {
                 emit(
                     Resource.Error(message = "oops!!! something went wrong", nullPicture)

@@ -2,7 +2,14 @@ package com.teamb.sj.apod.feature_home.presentation.favpictures.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,7 +26,6 @@ import com.teamb.sj.apod.feature_home.domain.model.PictureDetail
 @Composable
 fun FavoritePictureItem(
     pictureDetail: PictureDetail,
-
     modifier: Modifier = Modifier,
 ) {
 
@@ -33,11 +39,12 @@ fun FavoritePictureItem(
     ) {
         Column {
             Image(
-
-                painter = rememberImagePainter(pictureDetail.url,
+                painter = rememberImagePainter(
+                    pictureDetail.url,
                     builder = {
                         crossfade(true)
-                    }),
+                    }
+                ),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -66,34 +73,4 @@ fun FavoritePictureItem(
             }
         }
     }
-
 }
-
-/*
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun previewFonts() {
-
-    Surface(modifier = Modifier.fillMaxSize()) {
-
-
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)) {
-            Text(text = "this is h1", style = MaterialTheme.typography.)
-            Text(text = "this is h2", style = MaterialTheme.typography.h2)
-            Text(text = "this is h3", style = MaterialTheme.typography.h3)
-            Text(text = "this is h4", style = MaterialTheme.typography.h4)
-            Text(text = "this is h5", style = MaterialTheme.typography.h5)
-            Text(text = "this is h6", style = MaterialTheme.typography.h6)
-            Text(text = "this is body1", style = MaterialTheme.typography.body1)
-            Text(text = "this is body2", style = MaterialTheme.typography.body2)
-            Text(text = "this is subtitle1", style = MaterialTheme.typography.subtitle1)
-            Text(text = "this is subtitle2", style = MaterialTheme.typography.subtitle2)
-
-
-        }
-
-    }
-}*/

@@ -4,15 +4,21 @@ import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.Download
@@ -25,22 +31,70 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.teamb.sj.apod.core.util.DownloadBroadcastReceiver
-import com.teamb.sj.apod.core.util.FileUtils.downloadImage
+import com.teamb.sj.apod.core.util.FileUtils
 import com.teamb.sj.apod.core.util.FirebaseUtils
 import com.teamb.sj.apod.feature_home.domain.model.PictureDetail
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun PictureDetailView(
+    picture: PictureDetail,
+    favoriteState: Boolean,
+    toggleFav: (Boolean) -> Unit,
+    sendMessage: (String) -> Unit,
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clickable { },
+        elevation = 4.dp,
+        shape = RoundedCornerShape(12.dp),
+        backgroundColor = MaterialTheme.colorScheme.secondaryContainer,
+        content = {
+            Column {
+                Image(
+                    painter = rememberImagePainter(
+                        picture.url,
+                        builder = {
+                            crossfade(true)
+                        }
+                    ),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(120.dp, 360.dp),
+                    alignment = Alignment.Center,
+                    contentScale = ContentScale.FillWidth
+                )
+                PictureDetailBody(
+                    picture,
+                    favoriteState,
+                    toggleFav,
+                    sendMessage
+                )
+            }
+        }
+    )
+}
 
 @Composable
 fun PictureDetailBody(
     picture: PictureDetail,
     isFav: Boolean,
     onClick: (Boolean) -> Unit,
+    sendMessage: (String) -> Unit,
 ) {
     var fileID = 0L
-    DownloadBroadcastReceiver(DownloadManager.ACTION_DOWNLOAD_COMPLETE) { it, context ->
+    var downloadInProgress = false
+    DownloadBroadcastReceiver(DownloadManager.ACTION_DOWNLOAD_COMPLETE) { _, context ->
+        downloadInProgress = false
         try {
             val manager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             val uri = manager.getUriForDownloadedFile(fileID)
@@ -109,7 +163,15 @@ fun PictureDetailBody(
             val visibility = FirebaseUtils.isSetWallpaperEnabled()
             if (visibility && picture.mediaType == "image") {
                 Spacer(modifier = Modifier.width(8.dp))
-                OutlinedButton(onClick = { fileID = downloadImage(picture.hdUrl, context) }) {
+                OutlinedButton(onClick = {
+                    if (downloadInProgress) {
+                        sendMessage("Already a download in Progress")
+                    } else {
+                        downloadInProgress = true
+                        sendMessage("Downloading... please wait...")
+                        fileID = FileUtils.downloadImage(picture.hdUrl, context)
+                    }
+                }) {
                     Icon(
                         Icons.Outlined.Download,
                         contentDescription = "Download",

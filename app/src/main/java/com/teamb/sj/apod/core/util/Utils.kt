@@ -3,7 +3,6 @@ package com.teamb.sj.apod.core.util
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
 import java.time.format.DateTimeParseException
 
 object Utils {
@@ -58,4 +57,18 @@ object Utils {
         return dateStr
     }
 
+    fun getStartDateOfMonth(dateStr: String): String {
+        val date = getLocalDateFromString(dateStr)
+        return date.withDayOfMonth(1).toString()
+    }
+
+    fun getEndDateOfMonth(dateStr: String): String {
+        val date = getLocalDateFromString(dateStr)
+        val newDate = date.withDayOfMonth(date.lengthOfMonth())
+        return if (isFutureDate(newDate)) {
+            LocalDate.now(ZoneId.of("PST")).toString()
+        } else {
+            newDate.toString()
+        }
+    }
 }

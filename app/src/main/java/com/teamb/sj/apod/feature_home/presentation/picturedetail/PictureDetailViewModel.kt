@@ -1,5 +1,6 @@
 package com.teamb.sj.apod.feature_home.presentation.picturedetail
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -53,6 +54,8 @@ class PictureDetailViewModel @Inject constructor(
 
     private fun search() {
         // update the recently used date to data store
+        Log.i("date", _searchDateState.value)
+
         viewModelScope.launch {
             getPictureDetailUseCase.setRecentUsedDate(_searchDateState.value)
         }
@@ -129,6 +132,14 @@ class PictureDetailViewModel @Inject constructor(
                     search()
                 }
             }
+        }
+    }
+
+    fun sendSnackMessage(message: String) {
+        viewModelScope.launch {
+            _eventFlow.emit(
+                UIEvent.ShowSnackBar(message)
+            )
         }
     }
 

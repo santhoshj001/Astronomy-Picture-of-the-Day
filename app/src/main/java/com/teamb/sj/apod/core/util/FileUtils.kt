@@ -5,7 +5,6 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.webkit.MimeTypeMap
-import android.widget.Toast
 import java.io.File
 
 object FileUtils {
@@ -14,7 +13,6 @@ object FileUtils {
         val manager = current.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val uri: Uri = Uri.parse(url)
         val fileName: String = Constants.FILE_NAME + "." + MimeTypeMap.getFileExtensionFromUrl(url)
-        Toast.makeText(current, "Download in Progress... Please Wait... ", Toast.LENGTH_LONG).show()
 
         if (isFileExists(fileName)) {
             deleteFile(fileName)
