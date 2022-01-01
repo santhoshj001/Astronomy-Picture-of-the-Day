@@ -5,9 +5,9 @@ import com.teamb.sj.apod.feature_home.domain.model.PictureDetail
 import kotlinx.coroutines.flow.Flow
 
 interface PictureDetailRepository {
-    fun getPicture(date: String): Flow<Resource<PictureDetail>>
-    suspend fun addFavorite(date: String)
-    suspend fun deleteFavorite(date: String)
-    fun isFavorite(date: String): Flow<Resource<Boolean>>
+    fun getPicture(date: Long): Flow<Resource<PictureDetail>>
+    suspend fun addFavorite(date: Long)
+    suspend fun deleteFavorite(date: Long)
+    fun isFavorite(date: Long): Flow<Resource<Boolean>>
     fun getFavoritePictures(): Flow<Resource<List<PictureDetail>>>
 }

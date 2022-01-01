@@ -5,14 +5,12 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teamb.sj.apod.core.util.Constants
 import com.teamb.sj.apod.core.util.Resource
 import com.teamb.sj.apod.core.util.Utils
 import com.teamb.sj.apod.feature_home.domain.model.PictureDetail
 import com.teamb.sj.apod.feature_home.domain.usecase.GetPictureDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,8 +25,8 @@ class PictureDetailViewModel @Inject constructor(
     private val getPictureDetailUseCase: GetPictureDetailUseCase
 ) : ViewModel() {
 
-    private var _searchDateState = mutableStateOf(Constants.DEFAULT_PIC_DATE)
-    val searchDate: State<String> = _searchDateState
+    private var _searchDateState = mutableStateOf(LocalDate.now())
+    val searchDate: State<LocalDate> = _searchDateState
 
     private val _state = mutableStateOf(PictureInfoState())
     val state: State<PictureInfoState> = _state
@@ -44,8 +42,8 @@ class PictureDetailViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getPictureDetailUseCase.getRecentUsedDate().collect { date ->
-                if (date != null && date != Constants.DEFAULT && _searchDateState.value != date) {
-                    _searchDateState.value = date
+                if (Utils.isValidDate(date)) {
+                    _searchDateState.value = LocalDate.ofEpochDay(date)
                     search()
                 }
             }
@@ -54,38 +52,39 @@ class PictureDetailViewModel @Inject constructor(
 
     private fun search() {
         // update the recently used date to data store
-        Log.i("date", _searchDateState.value)
+        Log.i("date", _searchDateState.value.toString())
 
         viewModelScope.launch {
-            getPictureDetailUseCase.setRecentUsedDate(_searchDateState.value)
+            getPictureDetailUseCase.setRecentUsedDate(_searchDateState.value.toEpochDay())
         }
         getPictureDetailJob?.cancel()
-        getPictureDetailJob = getPictureDetailUseCase(_searchDateState.value).onEach { result ->
-            when (result) {
-                is Resource.Error -> {
-                    _state.value = _state.value.copy(
-                        pictureDetail = result.data ?: PictureDetail()
-                    )
-                    _eventFlow.emit(UIEvent.ShowSnackBar(result.message ?: "Unknown error"))
+        getPictureDetailJob =
+            getPictureDetailUseCase(_searchDateState.value.toEpochDay()).onEach { result ->
+                when (result) {
+                    is Resource.Error -> {
+                        _state.value = _state.value.copy(
+                            pictureDetail = result.data ?: PictureDetail()
+                        )
+                        _eventFlow.emit(UIEvent.ShowSnackBar(result.message ?: "Unknown error"))
+                    }
+                    is Resource.Loading -> {
+                        _state.value = PictureInfoState(
+                            pictureDetail = result.data ?: PictureDetail(),
+                            isLoading = true
+                        )
+                    }
+                    is Resource.Success -> {
+                        _state.value = PictureInfoState(
+                            pictureDetail = result.data ?: PictureDetail()
+                        )
+                    }
                 }
-                is Resource.Loading -> {
-                    _state.value = PictureInfoState(
-                        pictureDetail = result.data ?: PictureDetail(),
-                        isLoading = true
-                    )
-                }
-                is Resource.Success -> {
-                    _state.value = PictureInfoState(
-                        pictureDetail = result.data ?: PictureDetail()
-                    )
-                }
-            }
-        }.launchIn(viewModelScope)
+            }.launchIn(viewModelScope)
         refreshFavoriteState()
     }
 
     private fun refreshFavoriteState() {
-        getPictureDetailUseCase.isFavorite(_searchDateState.value).onEach { result ->
+        getPictureDetailUseCase.isFavorite(_searchDateState.value.toEpochDay()).onEach { result ->
             when (result) {
                 is Resource.Success<*> -> {
                     _favState.value = true
@@ -100,26 +99,26 @@ class PictureDetailViewModel @Inject constructor(
     fun toggleFavorite(isFavorite: Boolean) {
         viewModelScope.launch {
             if (isFavorite) {
-                getPictureDetailUseCase.addFavorite(_searchDateState.value)
+                getPictureDetailUseCase.addFavorite(_searchDateState.value.toEpochDay())
                 refreshFavoriteState()
             } else {
-                getPictureDetailUseCase.deleteFavorite(_searchDateState.value)
+                getPictureDetailUseCase.deleteFavorite(_searchDateState.value.toEpochDay())
                 refreshFavoriteState()
             }
         }
     }
 
     fun updateDate(localDate: LocalDate?) {
-        localDate?.let {
+        localDate?.let { date ->
             when {
-                Utils.isFutureDate(localDate) -> {
+                Utils.isFutureDate(date) -> {
                     viewModelScope.launch {
                         _eventFlow.emit(
                             UIEvent.ShowSnackBar("Invalid date - future Date")
                         )
                     }
                 }
-                Utils.isOlderDate(localDate) -> {
+                Utils.isOlderDate(date) -> {
                     viewModelScope.launch {
                         _eventFlow.emit(
                             UIEvent.ShowSnackBar("Invalid date - Date Older than 1995-06-16")
@@ -127,8 +126,8 @@ class PictureDetailViewModel @Inject constructor(
                     }
                 }
                 else -> {
-                    val updatedDate = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                    updatedDate?.let { _searchDateState.value = it }
+                    Log.i("sjdroid", "updateDate: ${date.toString()} ")
+                    _searchDateState.value = date
                     search()
                 }
             }

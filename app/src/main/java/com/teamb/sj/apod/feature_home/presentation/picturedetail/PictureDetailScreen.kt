@@ -25,20 +25,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.teamb.sj.apod.core.util.Screen
-import com.teamb.sj.apod.core.util.Utils
 import com.teamb.sj.apod.feature_home.presentation.picturedetail.components.PictureAppBar
 import com.teamb.sj.apod.feature_home.presentation.picturedetail.components.PictureDetailView
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import kotlinx.coroutines.flow.collectLatest
 
 @ExperimentalMaterial3Api
 @Composable
 fun PictureDetailScreen(
     navController: NavController,
-    date: String?,
+    date: Long,
     viewModel: PictureDetailViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
@@ -46,29 +42,16 @@ fun PictureDetailScreen(
     val favoriteState = viewModel.favState.value
     val scaffoldState = rememberScaffoldState()
 
-    date?.let { dateString ->
+    /*date?.let { dateString ->
         if (!searchDateState.contentEquals(dateString)) {
             viewModel.updateDate(Utils.getLocalDateFromString(dateString))
         }
-    }
-    val selectedDate = Utils.getLocalDateFromString(searchDateState)
+    }*/
     val datePickerDialog = DatePickerDialog(
         LocalContext.current, { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-            val localDate = LocalDate.of(year, month + 1, dayOfMonth)
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            navController.navigate(
-                Screen.PictureDetailScreen.createRouteWithDate(
-                    localDate.format(
-                        formatter
-                    )
-                )
-            ) {
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = false
-                }
-                launchSingleTop = true
-            }
-        }, selectedDate.year, selectedDate.monthValue - 1, selectedDate.dayOfMonth
+            val selectedDate = LocalDate.of(year, month, dayOfMonth)
+            viewModel.updateDate(selectedDate)
+        }, searchDateState.year, searchDateState.monthValue, searchDateState.dayOfMonth
     )
     datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
 
@@ -107,7 +90,7 @@ fun PictureDetailScreen(
                     Text(text = "Loading..")
                 }
             } else {
-                if (state.pictureDetail.date.isNotEmpty()) {
+                if (state.pictureDetail.date > 0) {
                     LazyColumn {
                         item {
                             PictureDetailView(

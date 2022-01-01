@@ -48,9 +48,10 @@ fun NavHostContainer(
                         }
                     )
                 ) {
-                    val date = it.arguments?.getString(Constants.PIC_DATE)?.removePrefix("{")
-                        ?.removeSuffix("}")
-                    PictureDetailScreen(navController, date)
+                    val date = it.arguments?.getLong(Constants.PIC_DATE)
+                    if (date != null) {
+                        PictureDetailScreen(navController, date)
+                    }
                 }
 
                 // route : favorites

@@ -8,7 +8,7 @@ import com.teamb.sj.apod.feature_home.domain.model.PictureDetail
 @Keep
 @Entity
 data class PictureDetailEntity(
-    @PrimaryKey val date: String,
+    @PrimaryKey val date: Long,
     val explanation: String,
     val mediaType: String,
     val title: String,

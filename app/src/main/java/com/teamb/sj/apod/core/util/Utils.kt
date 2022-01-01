@@ -3,18 +3,15 @@ package com.teamb.sj.apod.core.util
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
 
 object Utils {
 
     /***
      * validate the format received is matching the server requirements
      */
-    fun isValidDateFormat(dateStr: String): Boolean {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        try {
-            LocalDate.parse(dateStr, formatter)
-        } catch (e: DateTimeParseException) {
+    fun isValidDate(dateStr: Long): Boolean {
+        val date = LocalDate.ofEpochDay(dateStr)
+        if (isFutureDate(date) || isOlderDate(date)) {
             return false
         }
         return true
@@ -23,12 +20,9 @@ object Utils {
     /***
      * method to return the local date from String
      */
-    fun getLocalDateFromString(dateStr: String): LocalDate {
+    fun getLocalDateFromString(date: String): LocalDate {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        if (isValidDateFormat(dateStr)) {
-            return LocalDate.parse(dateStr, formatter)
-        }
-        return LocalDate.now(ZoneId.of("PST"))
+        return LocalDate.parse(date, formatter)
     }
 
     /***
@@ -48,22 +42,18 @@ object Utils {
         return localDate.isAfter(LocalDate.now(ZoneId.of("PST")))
     }
 
-    fun getHumanReadableDate(dateStr: String): String {
-        if (isValidDateFormat(dateStr)) {
-
-            val formatter = DateTimeFormatter.ofPattern("d MMM uuuu")
-            return getLocalDateFromString(dateStr).format(formatter)
-        }
-        return dateStr
+    fun getHumanReadableDate(dateStr: Long): String {
+        val date = LocalDate.ofEpochDay(dateStr)
+        return date.toString()
     }
 
-    fun getStartDateOfMonth(dateStr: String): String {
-        val date = getLocalDateFromString(dateStr)
+    fun getStartDateOfMonth(dateStr: Long): String {
+        val date = LocalDate.ofEpochDay(dateStr)
         return date.withDayOfMonth(1).toString()
     }
 
-    fun getEndDateOfMonth(dateStr: String): String {
-        val date = getLocalDateFromString(dateStr)
+    fun getEndDateOfMonth(dateStr: Long): String {
+        val date = LocalDate.ofEpochDay(dateStr)
         val newDate = date.withDayOfMonth(date.lengthOfMonth())
         return if (isFutureDate(newDate)) {
             LocalDate.now(ZoneId.of("PST")).toString()

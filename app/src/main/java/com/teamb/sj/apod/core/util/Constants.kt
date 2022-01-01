@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.outlined.Home
 import com.teamb.sj.apod.feature_home.presentation.BottomNavItem
+import java.time.LocalDate
 
 object Constants {
     const val FILE_NAME = "Telescope"
@@ -14,6 +15,7 @@ object Constants {
     const val DEFAULT_PIC_DATE: String = "Choose Date"
     const val IMAGE: String = "image"
     const val DEFAULT: String = "default"
+    val DEFAULT_DATE: Long = LocalDate.now().toEpochDay()
     const val PIC_DATE = "picDate"
     val BottomNavItems = listOf(
         BottomNavItem(

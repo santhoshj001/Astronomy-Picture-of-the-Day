@@ -2,6 +2,7 @@ package com.teamb.sj.apod.feature_home.data.remote.dto
 
 import androidx.annotation.Keep
 import com.teamb.sj.apod.core.util.Constants
+import com.teamb.sj.apod.core.util.Utils
 import com.teamb.sj.apod.feature_home.data.local.entity.PictureDetailEntity
 
 @Keep
@@ -18,7 +19,7 @@ data class PictureDetailDto(
 ) {
     fun toPictureDetailEntity(): PictureDetailEntity {
         return PictureDetailEntity(
-            date = date,
+            date = Utils.getLocalDateFromString(date).toEpochDay(),
             explanation = explanation,
             mediaType = media_type,
             title = title,

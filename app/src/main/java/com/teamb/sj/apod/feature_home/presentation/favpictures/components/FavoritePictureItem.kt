@@ -28,7 +28,6 @@ fun FavoritePictureItem(
     pictureDetail: PictureDetail,
     modifier: Modifier = Modifier,
 ) {
-
     Box(
         modifier = modifier
             .fillMaxSize()

@@ -19,17 +19,14 @@ class PictureDetailRepositoryImpl @Inject constructor(
     private val dao: PictureDao,
 ) : PictureDetailRepository {
 
-    override fun getPicture(date: String): Flow<Resource<PictureDetail>> = flow {
+    override fun getPicture(date: Long): Flow<Resource<PictureDetail>> = flow {
         val nullPicture: PictureDetail? = null
-
         emit(Resource.Loading(nullPicture))
         val databasePicture = dao.getPicture(date)
-
         if (databasePicture != null) {
             emit(Resource.Success(databasePicture.toPictureDetail()))
         } else {
             try {
-
                 val startDate = Utils.getStartDateOfMonth(date)
                 val endDate = Utils.getEndDateOfMonth(date)
                 val networkPictures = api.getPicture(
@@ -56,15 +53,15 @@ class PictureDetailRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun addFavorite(date: String) {
+    override suspend fun addFavorite(date: Long) {
         dao.insertFavorite(FavoritesEntity(date))
     }
 
-    override suspend fun deleteFavorite(date: String) {
+    override suspend fun deleteFavorite(date: Long) {
         dao.deleteFavorite(date)
     }
 
-    override fun isFavorite(date: String): Flow<Resource<Boolean>> = flow {
+    override fun isFavorite(date: Long): Flow<Resource<Boolean>> = flow {
         val a = dao.isFavorite(date)
         if (a.isEmpty())
             emit(Resource.Loading(false))

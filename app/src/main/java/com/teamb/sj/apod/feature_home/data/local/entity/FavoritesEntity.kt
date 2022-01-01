@@ -4,4 +4,4 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class FavoritesEntity(@PrimaryKey val date: String)
+data class FavoritesEntity(@PrimaryKey val date: Long)
