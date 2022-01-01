@@ -59,7 +59,7 @@ fun FavPictureScreen(
         Scaffold(
             backgroundColor = MaterialTheme.colorScheme.background,
             topBar = {
-                PictureAppBar(titleString = "Telescope")
+                PictureAppBar(titleString = "TeleScope")
             },
             content = {
                 LazyVerticalGrid(

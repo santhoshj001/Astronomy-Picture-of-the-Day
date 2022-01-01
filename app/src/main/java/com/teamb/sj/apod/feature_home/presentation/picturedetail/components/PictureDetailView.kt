@@ -40,6 +40,7 @@ import com.teamb.sj.apod.core.util.DownloadBroadcastReceiver
 import com.teamb.sj.apod.core.util.FileUtils
 import com.teamb.sj.apod.core.util.FirebaseUtils
 import com.teamb.sj.apod.feature_home.domain.model.PictureDetail
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -131,7 +132,14 @@ fun PictureDetailBody(
                     Text(
                         text = "\u00a9 " + picture.copyright,
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.weight(4f)
+                    )
+                    Text(
+                        text = "" + LocalDate.ofEpochDay(picture.date).toString(),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.weight(1f)
                     )
                 }
             }

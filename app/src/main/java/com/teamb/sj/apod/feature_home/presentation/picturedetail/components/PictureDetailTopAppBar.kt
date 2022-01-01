@@ -18,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.teamb.sj.apod.R
-import java.util.Locale
 
 @Composable
 fun PictureAppBar(
@@ -41,7 +40,7 @@ fun PictureAppBar(
             actions = actions,
             title = {
                 Text(
-                    text = titleString.uppercase(Locale.getDefault()),
+                    text = titleString,
                     style = MaterialTheme.typography.displayLarge
                 )
             },
